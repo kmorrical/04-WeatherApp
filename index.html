@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="" ng-app="app">
+
+<head>
+    <title>MakeItRain</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
+    <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container" ng-controller="WeatherCtrl as home">
+        <header class="well">
+            <h1>Origin Weather Application</h1>
+            <p class="text-muted md-headline">Always know if you'll need an umbrella!</p>
+        </header>
+        <!--username data has gone into the model with ng-model-"home.username"-->
+        <div class="btn-group btn-block" role="group">
+            <button type="button" class="btn btn-primary" ng-click="home.callWeatherApi('San Diego')">San Diego</button>
+            <button type="button" class="btn btn-primary" ng-click="home.callWeatherApi('New York')">New York</button>
+            <button type="button" class="btn btn-primary" ng-click="home.callWeatherApi('Washington, D.C.')">Washington, D.C.</button>
+            <button type="button" class="btn btn-primary" ng-click="home.callWeatherApi('London')">London</button>
+            <button type="button" class="btn btn-primary" ng-click="home.callWeatherApi('Tokyo')">Tokyo</button>
+            <br></br>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Enter City you want the weather for" ng-model="home.city" aria-describedby="basic-addon2">
+                <span class="input-group-addon" id="basic-addon2" ng-click="home.callWeatherApi(home.city)">Go!</span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">City Information
+                    </div>
+                    <div class="panel-body text-center" ng-if="home.user">
+                        <div class="row text-center"><img ng-src="http://openweathermap.org/img/w/{{home.user.weather[0].icon}}.png" class="img-responsive"><b class="text-center">{{home.user.name}}</b>
+                            </div>
+                            <div class="text-center small">
+                                <br/>Lat/Long: {{home.user.coord.lat}},{{home.user.coord.lon}}
+                            </div>
+                            <hr>
+                            <div class="col-md-4 text-center"><b>Temperature(F)</b>
+                                <br/>
+                                <p class="green">{{home.user.main.temp | number: 2}}</p>
+                                <br/>
+                                <br/><b>Lowest Temp (F)</b>
+                                <br/>
+                                <p class="green">{{home.user.main.temp_min | number: 2}}</p>
+                            </div>
+                            <div class="col-md-4 text-center"><b>Pressure</b>
+                                <br/>
+                                <p class="green">{{home.user.main.pressure}}</p>
+                                <br/>
+                                <br/>
+                                <b>Highest Temp (F)</b>
+                                <br/>
+                                <p class="green">{{home.user.main.temp_max | number: 2}}</p>
+                            </div>
+                            <div class="col-md-4 text-center"><b>Humidity</b>
+                                <br/>
+                                <p class="green">{{home.user.main.humidity}}%</p>
+                                <br/>
+                                <br/><b>Wind Speed</b>
+                                <br/>
+                                <p class="green">{{home.user.wind.speed}}mph</p>
+                            </div>
+                            <br/>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Search History
+                        </div>
+                        <div class="panel-body" ng-if="home.user">
+                            <table class="table table-striped">
+                                <tr ng-repeat="search in home.searches | limitTo:-5 | orderBy:'time':true">
+                                    <td class="align-left">{{search.city}}</td>
+                                    <td class="align-right">{{search.date}}<br/>{{search.time}}</td>
+                                </tr>
+                             
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+            <div class="col-md-3"><img ng-src={{home.user.avatar_url}} class="img-circle img-responsive text-center"></img>
+                <hr>
+                <div class="text-center small">
+                    <p><span style="font-weight: bold">{{home.user.name}}</span> {{home.user.login}}</p>
+                    <br/>
+                    <p>{{home.user.location}}</p>
+                    <br/>
+                    <p ng-class=home.hireableColor>{{home.user.hireable}}</p>
+                    <br/>
+                    <p>Slingin' code since {{home.user.created_at | date: 'longDate'}}</p>
+                </div> -->
+        <!-- <br/>
+            </div>
+            <div class="col-md-3">
+                <div class="well text-muted text-center">
+                    <p>Followers </p>
+                    <br/>{{home.user.followers}}</div>
+            </div>
+            <div class="col-md-3">
+                <div class="well text-center">
+                    <p class="text-muted">Following</p>
+                    <br/> {{home.user.following}}</div>
+            </div>
+            <div class="col-md-3">
+                <div class="well text-center">
+                    <p class="text-muted">Public Repositories</p>
+                    <br/>{{home.user.public_repos}}</div> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="app/app.module.js"></script>
+        <script src="app/home/home.controller.js"></script>
+</body>
+
+</html>

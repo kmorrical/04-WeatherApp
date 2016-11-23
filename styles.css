@@ -1,0 +1,60 @@
+header {
+	height: 200px;
+	
+}
+
+h1{
+	font-size: 300%;
+	padding-left: 30px;
+}
+
+body{
+	font-family: 'Catamaran', sans-serif;
+}
+
+
+
+div.btn-group{
+	bottom-margin:0px;
+
+}
+
+div.input-group{
+	top-margin: 0px;
+}
+
+p.text-muted{
+	font-size: 150%;
+	padding-left: 0px;
+	padding-left: 30px;
+	
+
+}
+
+b.text-center{
+	font-size: 200%;
+	font-weight: 900;
+	padding: 0px;
+} 
+
+td.align-right{
+	text-align: right;
+}
+img {
+    display: block;
+    margin: auto;
+    width: 10%;
+    padding: 0px;
+}
+
+b{
+	font-weight: 900;
+	text-align: center;
+}
+
+p.green{
+	color: #006600;
+	text-align: center;
+	font-size: 125%;
+	font-family: 'Catamaran', sans-serif;
+}
